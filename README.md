@@ -1,0 +1,2 @@
+# gojajo
+personal finance tracking
