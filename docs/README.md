@@ -1,2 +1,2 @@
-# gojajo
-personal finance tracking
+# piggy
+personal finance tracker

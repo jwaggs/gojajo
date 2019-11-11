@@ -33,4 +33,4 @@ FROM gcr.io/google-appengine/golang
 COPY --from=builder /go/bin/piggy /go/bin/piggy
 
 # declare our entry point for the container as the built binary
-ENTRYPOINT ["/go/bin/piggy"]
+CMD ["/go/bin/piggy"]
