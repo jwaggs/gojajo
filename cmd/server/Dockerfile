@@ -10,8 +10,7 @@ FROM golang:1.13 AS builder
 RUN apt-get update && apt-get install -y git && apt-get install -y ssh
 
 # copy go module files that specify our dependencies
-COPY go.mod .
-COPY go.sum .
+COPY go.mod go.sum ./
 
 # download go module dependencies
 RUN go mod download
@@ -27,9 +26,9 @@ WORKDIR /cmd/server
 # build the binary, outputing to /go/bin/piggy
 RUN go build -o /go/bin/piggy
 
-# this is the actual base image for our production container
+# this is the actual base image for our production image
 FROM alpine:latest
-# copy our statically compiled binary in to the production container
+# copy our statically compiled binary in to the production image
 COPY --from=builder /go/bin/piggy /go/bin/piggy
 
 # declare our entry point for the container as the built binary
