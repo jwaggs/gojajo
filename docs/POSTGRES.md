@@ -1,4 +1,4 @@
-## postgres helpers
+## postgres helper docs
 
 [heroku psql cli docs](https://devcenter.heroku.com/articles/heroku-postgresql#using-the-cli)
 
