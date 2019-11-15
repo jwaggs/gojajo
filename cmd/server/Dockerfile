@@ -27,7 +27,7 @@ WORKDIR /cmd/server
 RUN go build -o /go/bin/piggy
 
 # this is the actual base image for our production image
-FROM gcr.io/google-appengine/golang
+FROM alpine:latest
 # copy our statically compiled binary in to the production image
 COPY --from=builder /go/bin/piggy /go/bin/piggy
 
