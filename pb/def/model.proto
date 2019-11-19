@@ -1,0 +1,118 @@
+syntax = "proto3";
+package pb;
+option objc_class_prefix = "PGY";
+
+//team
+//├── bank
+//│   └── account
+//│       └── transaction
+//├── budget
+//│   └── bin
+//└── user
+
+// User of a team. Some users might be the only user of their team.
+message User {
+    string id = 1;
+    string name = 2;
+}
+
+// Team is the root hierarchical object that owns the relationship between users/banks/bins
+message Team {
+    string id = 1;
+    string name = 2;
+    repeated User users = 3;
+    repeated Bank banks = 4;
+    repeated Budget budgets = 5;
+    repeated Income income = 6;
+
+    Bin flex_bin = 16;  // The flex bin if defined by a user at this level.
+}
+
+// A financial institution that has been added by a user to a team for tracking purposes.
+message Bank {
+    string id = 1;
+    string name = 2;
+    repeated Account accounts = 3;
+    Team team = 4;
+
+    Bin flex_bin = 16;  // The flex bin if defined by a user at this level.
+}
+
+// Account within the context of a bank... such as a checking or savings account at chase bank.
+message Account {
+    string id = 1;
+    string name = 2;
+    Bank bank = 3;
+    repeated Transaction transactions = 4;
+    AccountType type = 5;
+    enum AccountType {
+        NONE = 0;
+        CHECKING = 1;
+        SAVINGS = 2;
+        CREDIT = 3;
+    }
+
+    Bin flex_bin = 16;  // The flex bin if defined by a user at this level.
+}
+
+// Transactions are credits and debits to and from bank accounts.
+message Transaction {
+    string id = 1;
+    string description = 2;
+    int64 amount = 3;
+    Account account = 4;
+    Status status = 5;
+    enum Status {
+        NONE = 0;
+        PENDING = 1;
+        CONFIRMED = 2;
+    }
+
+    Bin bin = 16;  // The bin once explicitly defined by a user for this transaction.
+}
+
+// Budget serves as the primary top level categorization for budget tracking.
+// (Outer Ring Category)
+message Budget {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string color = 4;
+    string amount = 5;
+    Frequency frequency = 6;
+    Team team = 7;
+    repeated Bin bins = 8;
+}
+
+// Bin is the most granular level of categorization for budget tracking.
+// (Inner Ring Category)
+message Bin {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string amount = 4;
+    Budget budget = 5;
+}
+
+// Frequency encapsulates the data necessary to track Bin-Budget and Income intervals.
+message Frequency {
+    int32 unit = 1;         // how many of the specified interval. i.e. 2 weeks would be unit:2 interval:2
+    Interval interval = 2;
+
+    enum Interval {
+        NONE = 0;
+        DAILY = 1;
+        WEEKLY = 2;
+        MONTHLY = 3;
+        ANNUAL = 4;
+    }
+}
+
+// Income wraps the necessary data
+message Income {
+    string id = 1;
+    string name = 2;
+    string amount = 3;
+    Frequency frequency = 4;
+    Team team = 5;
+}

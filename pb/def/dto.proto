@@ -1,0 +1,5 @@
+syntax = "proto3";
+package pb;
+option objc_class_prefix = "PGY";
+
+import "model.proto";

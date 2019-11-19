@@ -19,7 +19,7 @@ func main() {
 
 	// create our db connection pool
 	_ = openDB()
-	// listen for / serve http requests
+	// listen for and serve http requests
 	serve()
 }
 
