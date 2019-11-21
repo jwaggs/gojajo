@@ -1,0 +1,20 @@
+syntax = "proto3";
+package piggy;
+option go_package = "piggy";
+option objc_class_prefix = "PIGGY";
+
+import "dto.proto";
+import "model.proto";
+
+service PiggyService {
+    // rpc to create a new user and add them to an existing team or create a new one.
+    rpc SignUp (SignUpRequest) returns (SignUpResponse) {}
+    // rpc to add a bank institution's credentials to a team for tracking
+    rpc AddBank (AddBankRequest) returns (AddBankResponse) {}
+    // rpc to update budget/bin data associated with a team
+    rpc UpdateBudget (UpdateBudgetRequest) returns (UpdateBudgetResponse) {}
+    // rpc to tag a transaction with a corresponding bin
+    rpc TagTransaction (TagTransactionRequest) returns (TagTransactionResponse) {}
+    // rpc to stream transactions given the request filter
+    rpc StreamTransactions (StreamTransactionsRequest) returns (stream Transaction) {}
+}

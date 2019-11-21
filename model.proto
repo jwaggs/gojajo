@@ -1,6 +1,7 @@
 syntax = "proto3";
-package pb;
-option objc_class_prefix = "PGY";
+package piggy;
+option go_package = "piggy";
+option objc_class_prefix = "PIGGY";
 
 //team
 //├── bank

@@ -1,0 +1,42 @@
+syntax = "proto3";
+package piggy;
+option go_package = "piggy";
+option objc_class_prefix = "PIGGY";
+// import "model.proto";
+
+
+message SignUpRequest {
+
+}
+
+message SignUpResponse {
+
+}
+
+message AddBankRequest {
+
+}
+
+message AddBankResponse {
+
+}
+
+message UpdateBudgetRequest {
+
+}
+
+message UpdateBudgetResponse {
+
+}
+
+message TagTransactionRequest {
+
+}
+
+message TagTransactionResponse {
+
+}
+
+message StreamTransactionsRequest {
+
+}

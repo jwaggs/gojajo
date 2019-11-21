@@ -1,0 +1,328 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "service.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "AccountAccountType": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "CHECKING",
+        "SAVINGS",
+        "CREDIT"
+      ],
+      "default": "NONE"
+    },
+    "FrequencyInterval": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "DAILY",
+        "WEEKLY",
+        "MONTHLY",
+        "ANNUAL"
+      ],
+      "default": "NONE"
+    },
+    "TransactionStatus": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PENDING",
+        "CONFIRMED"
+      ],
+      "default": "NONE"
+    },
+    "piggyAccount": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "bank": {
+          "$ref": "#/definitions/piggyBank"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyTransaction"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/AccountAccountType"
+        },
+        "flex_bin": {
+          "$ref": "#/definitions/piggyBin"
+        }
+      },
+      "description": "Account within the context of a bank... such as a checking or savings account at chase bank."
+    },
+    "piggyAddBankResponse": {
+      "type": "object"
+    },
+    "piggyBank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyAccount"
+          }
+        },
+        "team": {
+          "$ref": "#/definitions/piggyTeam"
+        },
+        "flex_bin": {
+          "$ref": "#/definitions/piggyBin"
+        }
+      },
+      "description": "A financial institution that has been added by a user to a team for tracking purposes."
+    },
+    "piggyBin": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "budget": {
+          "$ref": "#/definitions/piggyBudget"
+        }
+      },
+      "title": "Bin is the most granular level of categorization for budget tracking.\n(Inner Ring Category)"
+    },
+    "piggyBudget": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "frequency": {
+          "$ref": "#/definitions/piggyFrequency"
+        },
+        "team": {
+          "$ref": "#/definitions/piggyTeam"
+        },
+        "bins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyBin"
+          }
+        }
+      },
+      "title": "Budget serves as the primary top level categorization for budget tracking.\n(Outer Ring Category)"
+    },
+    "piggyFrequency": {
+      "type": "object",
+      "properties": {
+        "unit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "interval": {
+          "$ref": "#/definitions/FrequencyInterval"
+        }
+      },
+      "description": "Frequency encapsulates the data necessary to track Bin-Budget and Income intervals."
+    },
+    "piggyIncome": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "frequency": {
+          "$ref": "#/definitions/piggyFrequency"
+        },
+        "team": {
+          "$ref": "#/definitions/piggyTeam"
+        }
+      },
+      "title": "Income wraps the necessary data"
+    },
+    "piggySignUpResponse": {
+      "type": "object"
+    },
+    "piggyTagTransactionResponse": {
+      "type": "object"
+    },
+    "piggyTeam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyUser"
+          }
+        },
+        "banks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyBank"
+          }
+        },
+        "budgets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyBudget"
+          }
+        },
+        "income": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/piggyIncome"
+          }
+        },
+        "flex_bin": {
+          "$ref": "#/definitions/piggyBin"
+        }
+      },
+      "title": "Team is the root hierarchical object that owns the relationship between users/banks/bins"
+    },
+    "piggyTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "account": {
+          "$ref": "#/definitions/piggyAccount"
+        },
+        "status": {
+          "$ref": "#/definitions/TransactionStatus"
+        },
+        "bin": {
+          "$ref": "#/definitions/piggyBin"
+        }
+      },
+      "description": "Transactions are credits and debits to and from bank accounts."
+    },
+    "piggyUpdateBudgetResponse": {
+      "type": "object"
+    },
+    "piggyUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "description": "User of a team. Some users might be the only user of their team."
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeStreamError": {
+      "type": "object",
+      "properties": {
+        "grpc_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "http_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "http_status": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "x-stream-definitions": {
+    "piggyTransaction": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/piggyTransaction"
+        },
+        "error": {
+          "$ref": "#/definitions/runtimeStreamError"
+        }
+      },
+      "title": "Stream result of piggyTransaction"
+    }
+  }
+}
