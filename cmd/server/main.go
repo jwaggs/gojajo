@@ -50,7 +50,7 @@ func openDB() *sql.DB {
 func serve() {
 	port := getEnv("PORT", "3000")
 	addr := fmt.Sprintf(":%s", port)
-	log.Println("serving on", addr)
+	log.Println("serving at", addr)
 
 	r := piggy.Router()
 	err := http.ListenAndServe(addr, r)

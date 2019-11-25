@@ -9,6 +9,9 @@ FROM golang:1.13 AS builder
 # git is required for fetching the dependencies.
 RUN apt-get update && apt-get install -y git && apt-get install -y ssh
 
+# set app dir
+WORKDIR /piggy
+
 # copy go module files that specify our dependencies
 COPY go.mod go.sum ./
 
@@ -22,7 +25,7 @@ RUN go mod download
 COPY . .
 
 # change working directory to the build location
-WORKDIR /cmd/server
+WORKDIR /piggy/cmd/server
 # build the binary, outputing to /go/bin/piggy
 RUN go build -o /go/bin/piggy
 
