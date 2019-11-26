@@ -1,6 +1,6 @@
 # Piggy
 
-This is a hobby project started by two brothers interested in supercharging their personal finance budgeting and tracking workflow. 
+This is a hobby project started by two brothers interested in supercharging their personal finance workflow. 
 
 The name of the project is a play on the words "Piggy Bank Police".
 
