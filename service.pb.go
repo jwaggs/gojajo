@@ -145,7 +145,7 @@ func (x *piggyServiceStreamTransactionsClient) Recv() (*Transaction, error) {
 	return m, nil
 }
 
-// PiggyServiceServer is the server API for PiggyService service.
+// PiggyServiceServer is the api API for PiggyService service.
 type PiggyServiceServer interface {
 	// rpc to create a new user and add them to an existing team or create a new one.
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)

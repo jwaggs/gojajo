@@ -3,11 +3,10 @@ module github.com/jwaggs/piggy
 go 1.13
 
 require (
-	github.com/aclindsa/xml v0.0.0-20190701095008-453d2c6090c2 // indirect
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/golang/protobuf v1.3.2
 	github.com/howeyc/gopass v0.0.0-20190910152052-7cb4b85ec19c
-	github.com/jwaggs/ofxgo v0.1.0
+	github.com/jwaggs/ofxgo v0.1.1-0.20191126192121-d1cb82f0f097
 	github.com/lib/pq v1.2.0
 	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c // indirect
 	golang.org/x/net v0.0.0-20191125084936-ffdde1057850 // indirect
