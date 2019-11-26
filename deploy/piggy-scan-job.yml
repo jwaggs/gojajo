@@ -1,0 +1,15 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: piggy-scan
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: piggy-scan
+              image: gcr.io/piggy-police/piggy-scan:latest
+              command: ["/go/bin/piggy-scan",  "chase", "--password", "${CHASE_PASSWORD}"]
+          restartPolicy: OnFailure

@@ -15,6 +15,6 @@ logs `kubectl logs $POD_NAME`
 
 interactive bash shell `kubectl exec -ti $POD_NAME bash`
 
-create deployment `kubectl create deployment pig-api --image=gcr.io/piggy-police/pig-api:latest`
+create deployment `kubectl create deployment piggy-api --image=gcr.io/piggy-police/pig-api:latest`
    
-expose service `kubectl expose deployment/pig-api --type NodePort --port 80 --target-port 8080`
+expose service `kubectl expose deployment/piggy-api --type NodePort --port 80 --target-port 8080`
