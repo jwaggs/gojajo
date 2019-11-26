@@ -18,7 +18,7 @@ func main() {
 	defer log.Println("exiting server")
 
 	// create our db connection pool
-	_ = openDB()
+	// _ = openDB() // remove db for now
 	// listen for and serve http requests
 	serve()
 }

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pig-pod
+spec:
+  containers:
+    - name: pig-container
+      image: gcr.io/piggy-police/pig-api:latest
+#      env:
+#        - name: PORT
+#          value: "3005"
+      command: ["/go/bin/piggy"]
