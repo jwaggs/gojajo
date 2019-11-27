@@ -3,7 +3,7 @@ module github.com/jwaggs/piggy
 go 1.13
 
 require (
-	github.com/ddliu/go-httpclient v0.6.3 // indirect
+	github.com/ddliu/go-httpclient v0.6.3
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/golang/protobuf v1.3.2
 	github.com/howeyc/gopass v0.0.0-20190910152052-7cb4b85ec19c
