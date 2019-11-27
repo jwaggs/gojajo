@@ -54,7 +54,8 @@ func bankTransactions(o bankAcctOpts) {
 		fmt.Printf("Balance: %s %s (as of %s)\n", stmt.BalAmt, stmt.CurDef, stmt.DtAsOf)
 		fmt.Println("Transactions:")
 		for _, tran := range stmt.BankTranList.Transactions {
-			printTransaction(stmt.CurDef, &tran)
+			tran = tran // copy onto self to shut up compiler for now
+			// printTransaction(stmt.CurDef, &tran)
 		}
 	}
 }

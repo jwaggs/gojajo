@@ -48,7 +48,7 @@ func openDB() *sql.DB {
 
 // serve configures and runs the server
 func serve() {
-	port := getEnv("PORT", "3000")
+	port := getEnv("PORT", "8080")
 	addr := fmt.Sprintf(":%s", port)
 	log.Println("serving at", addr)
 

@@ -17,4 +17,25 @@ interactive bash shell `kubectl exec -ti $POD_NAME bash`
 
 create deployment `kubectl create deployment piggy-api --image=gcr.io/piggy-police/pig-api:latest`
    
-expose service `kubectl expose deployment/piggy-api --type NodePort --port 80 --target-port 8080`
+expose service `kubectl expose deployment/piggy-api --type ClusterIP --port 80 --target-port 8080`
+
+pod ip `kubectl get pods -l run=my-app -o yaml | grep podIP`
+
+create secrete 
+```
+# Create files needed for rest of example.
+echo -n 'admin' > ./username.txt
+echo -n '1f2d1e2e67df' > ./password.txt
+kubectl create secret generic jwaggs27-chase-user-pass --from-file=./username.txt --from-file=./password.txt --from-file=./clientuid.txt
+```
+
+or
+
+`kubectl create secret generic dev-db-secret --from-literal=username=devuser --from-literal=password='S!B\*d$zDsb'`
+
+### Cron
+format: minute hour dayOfMonth month dayOfWeek
+
+every second: `* * * * *`
+every 5th second: `*/5 * * * *`
+one minute past every 5th hour: `1 */5 * * *`

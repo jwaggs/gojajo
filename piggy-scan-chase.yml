@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: piggy-scan
+spec:
+  schedule: "*/1 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: piggy-scan
+              image: gcr.io/piggy-police/piggy-scan:latest
+              imagePullPolicy: Always
+              command: ["/go/bin/piggy-scan", "chase"]
+              volumeMounts:
+                - name: authcreds
+                  mountPath: "/secrets/auth"
+                  readOnly: true
+          volumes:
+            - name: authcreds
+              secret:
+                secretName: jwaggs27-chase-user-pass

@@ -38,4 +38,4 @@ FROM gcr.io/google-appengine/golang
 # copy our statically compiled binary in to the production image
 COPY --from=builder /go/bin/piggy-scan /go/bin/piggy-scan
 # declare our entry point for the container as the built binary
-CMD ["/go/bin/piggy-scan"]
+# CMD ["/go/bin/piggy-scan"]

@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
+	"github.com/ddliu/go-httpclient"
 	"github.com/jwaggs/ofxgo"
 	"os"
+	"path/filepath"
 	"time"
 )
 
 type bankAcctOpts struct {
 	accType string
-	accID string
-	bnkID string
+	accID   string
+	bnkID   string
 }
 
 func getAccounts() {
@@ -71,7 +73,30 @@ func getAccounts() {
 			}
 		}
 	}
+	httpclient.Defaults(httpclient.Map{
+		"opt_useragent": "piggy-scan",
+		"opt_timeout":   30,
+	})
+	res, err := httpclient.Get("http://10.8.1.33:8080/started")
+	fmt.Println("pre-wait get ---", "res:", res, "err:", err)
 	fmt.Println("WAITING")
+
+	var files []string
+	root := "/secrets/auth"
+	err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		files = append(files, path)
+		return nil
+	})
+	if err != nil {
+		fmt.Println("error walking filepath", err)
+		panic(err)
+	}
+	for _, file := range files {
+		fmt.Println(file)
+	}
+
 	wg.Wait()
+	res, err = httpclient.Get("http://10.8.1.33:8080/finished")
+	fmt.Println("post-wait get ---", "res:", res, "err:", err)
 	fmt.Println("DONE-WAITING")
 }

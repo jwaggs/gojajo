@@ -34,5 +34,7 @@ FROM gcr.io/google-appengine/golang
 # copy our statically compiled binary in to the production image
 COPY --from=builder /go/bin/piggy-api /go/bin/piggy-api
 
+EXPOSE 8080
+
 # declare our entry point for the container as the built binary
 CMD ["/go/bin/piggy-api"]

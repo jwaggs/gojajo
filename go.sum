@@ -4,6 +4,8 @@ github.com/aclindsa/xml v0.0.0-20190701095008-453d2c6090c2 h1:ICeGSGrc6fd81VtQ3n
 github.com/aclindsa/xml v0.0.0-20190701095008-453d2c6090c2/go.mod h1:GjqOUT8xlg5+T19lFv6yAGNrtMKkZ839Gt4e16mBXlY=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
+github.com/ddliu/go-httpclient v0.6.3 h1:WGayEAjRC2/EiZnJdTYiOLyxHcl0c2GhokZTTqTd4kQ=
+github.com/ddliu/go-httpclient v0.6.3/go.mod h1:8QVbjq00YK2f2MQyiKuWMdaKOFRcoD9VuubkNCNOuZo=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/go-chi/chi v4.0.2+incompatible h1:maB6vn6FqCxrpz4FqWdh4+lwpyZIQS7YEAUcHlgXVRs=
