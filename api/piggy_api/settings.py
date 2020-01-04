@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'piggy_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd93afugd4i967s',
+        'USER': 'fyparbfgmnlvnt',
+        'PASSWORD': 'c22d443d82b815ac897fa70e746c1ee5470f8a118d2736e333e06266a556364d',
+        'HOST': 'ec2-174-129-253-162.compute-1.amazonaws.com',
+        'PORT': '5432'                 # set to empty string for default
     }
 }
 
