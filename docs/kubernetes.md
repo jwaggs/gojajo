@@ -39,3 +39,11 @@ format: minute hour dayOfMonth month dayOfWeek
 every second: `* * * * *`
 every 5th second: `*/5 * * * *`
 one minute past every 5th hour: `1 */5 * * *`
+
+### Labels
+
+```
+kubectl run nginx1 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx2 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx3 --image=nginx --restart=Never --labels=app=v1
+```

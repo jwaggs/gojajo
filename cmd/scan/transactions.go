@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jwaggs/ofxgo"
 	"os"
+	"time"
 )
 
 func bankTransactions(o bankAcctOpts) {
@@ -29,6 +30,9 @@ func bankTransactions(o bankAcctOpts) {
 			AcctType: acctTypeEnum,
 		},
 		Include: true,
+		IncludePending: true,
+		DtStart:&ofxgo.Date{Time: time.Now().AddDate(0, 0, -3)},
+		DtEnd:&ofxgo.Date{Time: time.Now()},
 	}
 
 	query.Bank = append(query.Bank, &statementRequest)
@@ -51,11 +55,12 @@ func bankTransactions(o bankAcctOpts) {
 	}
 
 	if stmt, ok := response.Bank[0].(*ofxgo.StatementResponse); ok {
-		fmt.Printf("Balance: %s %s (as of %s)\n", stmt.BalAmt, stmt.CurDef, stmt.DtAsOf)
-		fmt.Println("Transactions:")
+		fmt.Println("Account", o.accID)
+		fmt.Println("  Balance:", stmt.BalAmt, stmt.CurDef, "as of", stmt.DtAsOf)
+
 		for _, tran := range stmt.BankTranList.Transactions {
 			tran = tran // copy onto self to shut up compiler for now
-			// printTransaction(stmt.CurDef, &tran)
+			printTransaction(stmt.CurDef, &tran)
 		}
 	}
 }

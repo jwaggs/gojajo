@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"github.com/howeyc/gopass"
 	"github.com/jwaggs/ofxgo"
-	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 	"sync"
@@ -34,19 +32,21 @@ var noIndentRequests bool
 // default to chase til we get more of the system carved out
 func defineServerFlags(f *flag.FlagSet) {
 	// short function to force successful secret reads
-	readSecret := func(s string) string {
-		data, err := ioutil.ReadFile(s)
-		if err != nil {
-			log.Fatalln("error reading secret at path:", s, "\nsuppressing error output for security reasons.")
-		}
-		return string(data)
-	}
-
+	//readSecret := func(s string) string {
+	//	data, err := ioutil.ReadFile(s)
+	//	if err != nil {
+	//		log.Fatalln("error reading secret at path:", s, "\nsuppressing error output for security reasons.")
+	//	}
+	//	return string(data)
+	//}
 
 	f.StringVar(&serverURL, "url", "https://ofx.chase.com", "Financial institution's OFX Server URL (see ofxhome.com if you don't know it)")
-	f.StringVar(&clientUID, "clientuid", readSecret("/secrets/auth/clientuid.txt"), "Client UID (only required by a few FIs, like Chase)")
-	f.StringVar(&username, "username", readSecret("/secrets/auth/username.txt"), "Your username at financial institution")
-	f.StringVar(&password, "password", readSecret("/secrets/auth/password.txt"), "Your password at financial institution")
+	//f.StringVar(&clientUID, "clientuid", readSecret("/secrets/auth/clientuid.txt"), "Client UID (only required by a few FIs, like Chase)")
+	//f.StringVar(&username, "username", readSecret("/secrets/auth/username.txt"), "Your username at financial institution")
+	//f.StringVar(&password, "password", readSecret("/secrets/auth/password.txt"), "Your password at financial institution")
+	f.StringVar(&clientUID, "clientuid", os.Getenv("CHASE_CLIENTUID"), "Client UID (only required by a few FIs, like Chase)")
+	f.StringVar(&username, "username", os.Getenv("CHASE_USERNAME"), "Your username at financial institution")
+	f.StringVar(&password, "password", os.Getenv("CHASE_PASSWORD"), "Your password at financial institution")
 	f.StringVar(&org, "org", "B1", "'ORG' for your financial institution")
 	f.StringVar(&fid, "fid", "10898", "'FID' for your financial institution")
 	f.StringVar(&appID, "appid", "QWIN", "'APPID' to pretend to be")
@@ -91,6 +91,7 @@ func newRequest() (ofxgo.Client, *ofxgo.Request) {
 			AppVer:      appVer,
 			SpecVersion: ver,
 			NoIndent:    noIndentRequests,
+			CarriageReturn: true,
 		})
 
 	var query ofxgo.Request

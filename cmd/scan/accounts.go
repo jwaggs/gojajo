@@ -23,7 +23,7 @@ func getAccounts() {
 		fmt.Println("Error creating uid for transaction:", err)
 		os.Exit(1)
 	}
-
+	client.CarriageReturnNewLines()
 	acctInfo := ofxgo.AcctInfoRequest{
 		TrnUID:   *uid,
 		DtAcctUp: ofxgo.Date{Time: time.Unix(0, 0)},
@@ -35,6 +35,16 @@ func getAccounts() {
 		fmt.Println("Error requesting account information:", err)
 		os.Exit(1)
 	}
+
+	//defer response.Body.Close()
+	//fmt.Println(response)
+	//bodyBytes, err := ioutil.ReadAll(response.Body)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//bodyString := string(bodyBytes)
+	//fmt.Print(bodyString)
+
 
 	if response.Signon.Status.Code != 0 {
 		meaning, _ := response.Signon.Status.CodeMeaning()
@@ -77,7 +87,11 @@ func getAccounts() {
 		"opt_useragent": "piggy-scan",
 		"opt_timeout":   30,
 	})
-	res, err := httpclient.Get("http://10.8.1.33:8080/started")
+
+	host, port := os.Getenv("PIGGY_API_SERVICE_HOST"), os.Getenv("PIGGY_API_SERVICE_PORT")
+	addr := fmt.Sprintf("http://%s:%s", host, port)
+	startAddr := fmt.Sprintf("%s/started", addr)
+	res, err := httpclient.Get(startAddr)
 	fmt.Println("pre-wait get ---", "res:", res, "err:", err)
 	fmt.Println("WAITING")
 
@@ -96,7 +110,12 @@ func getAccounts() {
 	}
 
 	wg.Wait()
-	res, err = httpclient.Get("http://10.8.1.33:8080/finished")
+	finishedAddr := fmt.Sprintf("%s/finished", addr)
+	res, err = httpclient.Get(finishedAddr)
 	fmt.Println("post-wait get ---", "res:", res, "err:", err)
 	fmt.Println("DONE-WAITING")
+
+	//for _, pair := range os.Environ() {
+	//	fmt.Println(pair)
+	//}
 }

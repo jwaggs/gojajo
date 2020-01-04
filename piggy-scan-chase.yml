@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: piggy-scan
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "*/1 * * * *" # every one minute
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
