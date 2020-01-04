@@ -15,3 +15,15 @@
 cmd/server/server
 cmd/api/api
 cmd/scan/scan
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+.DS_Store
+
