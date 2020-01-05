@@ -14,3 +14,6 @@ echo 'generating migrations'
 flask db migrate
 echo 'applying migrations'
 flask db upgrade
+
+  # insert into team (id, name) values (1, 'james-account');
+  # insert into team (id, name) values (2, 'jon-account');
