@@ -3,10 +3,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.orm import relationship
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgres://fyparbfgmnlvnt:{os.getenv("DB_PASS")}@ec2-174-129-253-162.compute-1.amazonaws.com:5432/d93afugd4i967s'
-
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = f'postgres://fyparbfgmnlvnt:{os.getenv("DB_PASS")}@ec2-174-129-253-162.compute-1.amazonaws.com:5432/d93afugd4i967s'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -18,9 +19,9 @@ class Team(db.Model):
     __tablename__ = 'team'
     id = db.Column(db.Integer, primary_key=True)
     users = relationship('User', back_populates='team')
-    banks = relationship('Bank', back_populates='team')
-    major_bins = relationship('MajorBin', back_populates='team')
-    incomes = relationship('Income', back_populates='team')
+    # banks = relationship('Bank', back_populates='team')
+    # major_bins = relationship('MajorBin', back_populates='team')
+    # incomes = relationship('Income', back_populates='team')
 
     name = db.Column(db.String(128))
 
@@ -32,7 +33,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
-
+    team = relationship("Team", back_populates="users")
     name = db.Column(db.String(128))
 
 
@@ -132,6 +133,15 @@ class Income(db.Model):
     amount = db.Column(db.Float)
     interval_unit = db.Column(db.Integer)
     interval_type = db.Column(db.String(128))  # TODO: change interval_type to enum
+
+
+@app.route("/teams")
+def get_all():
+    try:
+        teams = Team.query.all()
+        return jsonify([e.serialize() for e in teams])
+    except Exception as e:
+        return (str(e))
 
 
 @app.route('/')
