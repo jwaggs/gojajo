@@ -6,9 +6,11 @@ psql postgres://fyparbfgmnlvnt:"${DB_PASS}"@ec2-174-129-253-162.compute-1.amazon
   GRANT ALL ON SCHEMA public TO fyparbfgmnlvnt;
 EOF
 
-echo 'initializing database'
+echo 'deleting migrations'
+rm -rf migrations
+echo 'initializing migrations'
 flask db init
-echo 'creating migrations'
+echo 'generating migrations'
 flask db migrate
 echo 'applying migrations'
 flask db upgrade
